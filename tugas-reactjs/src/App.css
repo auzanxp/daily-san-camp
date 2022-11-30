@@ -50,3 +50,8 @@
 .Card_head {
   border-bottom: 1px solid black;
 }
+
+.Text_bold {
+  font-weight: bold;
+}
+
