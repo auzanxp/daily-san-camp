@@ -51,7 +51,14 @@
   border-bottom: 1px solid black;
 }
 
-.Text_bold {
-  font-weight: bold;
+.box {
+  text-align: center;
 }
 
+.btn {
+  display: inline-block;
+  padding: 10px;
+  font-size: 16px;
+  width: 49%;
+  margin-left: 2px;
+}

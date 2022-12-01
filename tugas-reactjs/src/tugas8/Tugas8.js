@@ -6,10 +6,10 @@ const Tugas8 = (props) => {
             <div className='Card_head'>
                 <h1>Data Diri Peserta Kelas Reactjs</h1>
             </div>
-            <ul className='Text_bold'>
-                <li>Nama Lengkap : {props.name}</li>
-                <li>Email : {props.email}</li>
-                <li>Batch Pelatihan : {props.batch}</li>
+            <ul>
+                <li><b>Nama Lengkap :</b> {props.name}</li>
+                <li><b>Email :</b> {props.email}</li>
+                <li><b>Batch Pelatihan :</b> {props.batch}</li>
             </ul>
         </div>
     )
