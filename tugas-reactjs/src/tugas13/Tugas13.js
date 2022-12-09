@@ -1,110 +1,25 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useContext, useEffect } from "react";
+import { GlobalContext } from "../context/GlobalContext";
 
 const Tugas13 = () => {
-    const [student, setStudent] = useState(null);
-    const [input, setInput] = useState({
-        name: "",
-        course: "",
-        score: "",
-    });
-    const [loading, setLoading] = useState(false);
-    const [currentId, setCurrentId] = useState(-1)
-
-    const getStudent = async () => {
-        try {
-            const response = await axios.get(
-                "https://backendexample.sanbercloud.com/api/student-scores"
-            );
-            setStudent(response.data);
-            setLoading(false);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const handleIndexScore = (nilai) => {
-        if (nilai >= 80) {
-            return "A";
-        } else if (nilai >= 70 && nilai < 80) {
-            return "B";
-        } else if (nilai >= 60 && nilai < 70) {
-            return "C";
-        } else if (nilai >= 50 && nilai < 60) {
-            return "D";
-        } else {
-            return "E";
-        }
-    };
-
-    const handleInput = (event) => {
-        let name = event.target.name;
-        let value = event.target.value;
-        setInput({
-            ...input,
-            [name]: value
-        });
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        const { name, course, score } = input;
-        
-        if (currentId === -1) {
-            axios.post("https://backendexample.sanbercloud.com/api/student-scores", {
-                name,
-                course,
-                score
-            })
-                .then(() => {
-                    setLoading(true);
-                })
-        } else {
-            axios.put(`https://backendexample.sanbercloud.com/api/student-scores/${currentId}`, {
-                name,
-                course,
-                score
-            })
-                .then(() => {
-                    setLoading(true);
-                })
-        }
-
-        setCurrentId(-1)
-
-        setInput({
-            name: "",
-            course: "",
-            score: ""
-        });
-    };
-
-    const handleDelete = (e) => {
-        let idData = parseInt(e.target.value)
-        axios.delete(`https://backendexample.sanbercloud.com/api/student-scores/${idData}`)
-            .then(() => {
-                setLoading(true)
-            })
-    }
-
-    const handleEditData = (e) => {
-        let idData = parseInt(e.target.value)
-        setCurrentId(idData)
-        axios.get(`https://backendexample.sanbercloud.com/api/student-scores/${idData}`)
-            .then((response) => {
-                let data = response.data
-                setInput({
-                    name: data.name,
-                    course: data.course,
-                    score: data.score
-                })
-            })
-    }
-
+    const { datas, method } = useContext(GlobalContext)
+    let {
+        student,
+        input,
+        isLoading
+    } = datas
+    let {
+            handleIndexScore,
+            handleInput,
+            handleSubmit,
+            handleDelete,
+            handleEditData,
+            getStudent
+        } = method
+    
     useEffect(() => {
         getStudent();
-    }, [loading]);
+    }, [isLoading]);
 
     return (
         <>
@@ -217,7 +132,7 @@ const Tugas13 = () => {
                             type="submit"
                             className="inline-block mt-2 px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                         >
-                            {loading ? "Submiting..." : "Submit"}
+                            {isLoading ? "Submiting..." : "Submit"}
                         </button>
                     </form>
                 </div>
