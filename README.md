@@ -15,7 +15,7 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/auzanxp/sanbercode-reactjs-batch-40.git
+git remote add origin https://gitlab.com/auzanxp/
 git branch -M main
 git push -uf origin main
 ```
