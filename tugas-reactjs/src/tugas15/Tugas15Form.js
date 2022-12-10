@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const Tugas13 = () => {
-    const {IdData} = useParams()
+    const { IdData } = useParams()
     const { datas, method } = useContext(GlobalContext)
     let {
         input,
@@ -12,20 +12,27 @@ const Tugas13 = () => {
         isLoading
     } = datas
     let {
-            handleInput,
-            handleSubmit,
-        } = method
-    
+        handleInput,
+        handleSubmit,
+    } = method
+
     useEffect(() => {
         if (IdData !== undefined) {
             axios.get(`https://backendexample.sanbercloud.com/api/student-scores/${IdData}`)
-            .then((response) => {
-                let data = response.data
-                setInput({
-                    name: data.name,
-                    course: data.course,
-                    score: data.score
+                .then((response) => {
+                    let data = response.data
+                    setInput({
+                        name: data.name,
+                        course: data.course,
+                        score: data.score
+                    })
                 })
+        }
+        return () => {
+            setInput({
+                name: "",
+                course: "",
+                score: "",
             })
         }
     }, []);
