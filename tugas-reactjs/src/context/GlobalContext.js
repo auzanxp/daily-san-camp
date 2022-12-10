@@ -1,8 +1,12 @@
 import { createContext, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 export const GlobalContext = createContext()
 export const GlobalProvider = props => {
+
+    const navigate = useNavigate()
     const [student, setStudent] = useState(null);
     const [input, setInput] = useState({
         name: "",
@@ -60,6 +64,7 @@ export const GlobalProvider = props => {
             })
                 .then(() => {
                     setIsLoading(true);
+                    navigate('/tugas15')
                 })
         } else {
             axios.put(`https://backendexample.sanbercloud.com/api/student-scores/${currentId}`, {
@@ -69,6 +74,7 @@ export const GlobalProvider = props => {
             })
                 .then(() => {
                     setIsLoading(true);
+                    navigate('/tugas15')
                 })
         }
 
@@ -92,15 +98,7 @@ export const GlobalProvider = props => {
     const handleEditData = (e) => {
         let idData = parseInt(e.target.value)
         setCurrentId(idData)
-        axios.get(`https://backendexample.sanbercloud.com/api/student-scores/${idData}`)
-            .then((response) => {
-                let data = response.data
-                setInput({
-                    name: data.name,
-                    course: data.course,
-                    score: data.score
-                })
-            })
+        navigate(`/edit/${idData}`)
     }
 
     let datas = {
